@@ -1,0 +1,33 @@
+
+
+.style1 {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-danger);
+}
+
+.style2 {
+  margin-bottom: 1rem;
+}
+
+.style3 {
+  margin-bottom: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.style4 {
+  background: var(--color-bg-secondary);
+  padding: 1rem;
+  border-radius: 4px;
+  overflow: auto;
+  max-width: 80%;
+  white-space: pre-wrap;
+}
+
+.style5 {
+  margin-top: 1rem;
+}

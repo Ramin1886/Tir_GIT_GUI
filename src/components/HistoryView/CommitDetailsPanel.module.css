@@ -1,0 +1,49 @@
+
+
+.style1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.style2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+}
+
+.style3 {
+  margin: 0px;
+}
+
+.style4 {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.style5 {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.style6 {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.style7 {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.style8 {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.style9 {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}

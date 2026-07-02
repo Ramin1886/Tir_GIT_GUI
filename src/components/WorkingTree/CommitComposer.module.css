@@ -1,0 +1,23 @@
+
+
+.style1 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.style2 {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.style3 {
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: 12px;
+}
+
+.style4 {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: 12px;
+}

@@ -1,0 +1,29 @@
+
+
+.style1 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.style2 {
+  font-weight: 600;
+}
+
+.style3 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.style4 {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.style5 {
+  flex: 1;
+  overflow-y: auto;
+}

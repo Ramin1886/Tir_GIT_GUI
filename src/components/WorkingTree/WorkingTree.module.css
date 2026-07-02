@@ -1,0 +1,114 @@
+
+
+.style1 {
+  color: red;
+}
+
+.style2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.style3 {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.style4 {
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--color-accent);
+}
+
+.style5 {
+  width: 12px;
+  height: 12px;
+}
+
+.style6 {
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.style7 {
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--color-toast-error-bg);
+  color: var(--color-toast-error-text);
+  border: 1px solid var(--color-toast-error-border);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-4);
+  margin-left: var(--spacing-4);
+  margin-right: var(--spacing-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.style8 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.style9 {
+  font-size: var(--font-size-sm);
+}
+
+.style10 {
+  font-size: var(--font-size-sm);
+}
+
+.style11 {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.style12 {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.style13 {
+  padding: 4px 10px;
+  font-size: 11px;
+  border: 1px solid var(--color-toast-error-border);
+}
+
+.style14 {
+  width: 85%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+}
+
+.style15 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.style16 {
+  font-weight: 600;
+}
+
+.style17 {
+  padding: 0;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.style18 {
+  flex: 1;
+  overflow: hidden;
+  padding: var(--spacing-4);
+}

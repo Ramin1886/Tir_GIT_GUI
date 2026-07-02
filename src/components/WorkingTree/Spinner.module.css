@@ -1,0 +1,16 @@
+
+
+.style1 {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  display: inline-block;
+}
+
+.style2 {
+  opacity: 0.25;
+}
+
+.style3 {
+  opacity: 0.75;
+}

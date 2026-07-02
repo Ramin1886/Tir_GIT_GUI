@@ -1,0 +1,199 @@
+/* Diff Viewer Styles */
+.diff-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-bg-primary);
+}
+
+.diff-viewer--loading,
+.diff-viewer--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diff-viewer__message {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.diff-viewer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-3) var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
+}
+
+.diff-viewer__path {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.diff-viewer__badges {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.diff-viewer__content {
+  flex: 1;
+  overflow: auto;
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.diff-hunk {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.diff-hunk__header {
+  padding: var(--spacing-2) var(--spacing-4);
+  background-color: var(--color-diff-hunk-bg);
+  color: var(--color-diff-hunk-text);
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.diff-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.diff-line {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.diff-line:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.diff-line__num {
+  width: 45px;
+  text-align: right;
+  padding: 0 var(--spacing-2);
+  color: var(--color-text-secondary);
+  font-family: monospace;
+  user-select: none;
+  font-size: 0.75rem;
+}
+
+.diff-line__num--old {
+  border-right: 1px solid var(--color-border);
+}
+
+.diff-line__num--new {
+  border-right: 1px solid var(--color-border);
+}
+
+.diff-line__origin {
+  width: 25px;
+  text-align: center;
+  font-family: monospace;
+  user-select: none;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.diff-line__code {
+  padding: 0 var(--spacing-3);
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.diff-line__code pre {
+  margin: 0;
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Line Coloring Modifier Classes */
+.diff-line--add {
+  background-color: var(--color-diff-add-bg);
+  color: var(--color-diff-add-text);
+}
+
+.diff-line--add:hover {
+  background-color: var(--color-diff-add-bg) !important;
+}
+
+.diff-line--add .diff-line__num,
+.diff-line--add .diff-line__origin {
+  opacity: 0.75;
+}
+
+.diff-line--remove {
+  background-color: var(--color-diff-remove-bg);
+  color: var(--color-diff-remove-text);
+}
+
+.diff-line--remove:hover {
+  background-color: var(--color-diff-remove-bg) !important;
+}
+
+.diff-line--remove .diff-line__num,
+.diff-line--remove .diff-line__origin {
+  opacity: 0.75;
+}
+
+
+/* Split Diff Viewer Styles */
+.diff-table--split {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.diff-split-row td {
+  padding: 1px var(--spacing-2);
+  vertical-align: top;
+  border: none;
+}
+
+.diff-line__code--delete {
+  background-color: var(--color-diff-remove-bg);
+  color: var(--color-diff-remove-text);
+}
+
+.diff-line__code--add {
+  background-color: var(--color-diff-add-bg);
+  color: var(--color-diff-add-text);
+}
+
+.diff-line__num--delete {
+  background-color: rgba(248, 81, 73, 0.15);
+  color: var(--color-diff-remove-text);
+  text-align: right;
+  padding-right: var(--spacing-2) !important;
+}
+
+.diff-line__num--add {
+  background-color: rgba(46, 160, 67, 0.15);
+  color: var(--color-diff-add-text);
+  text-align: right;
+  padding-right: var(--spacing-2) !important;
+}
+
+.diff-split-empty {
+  background-color: var(--color-bg-secondary);
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.03) 5px, rgba(0, 0, 0, 0.03) 10px);
+}
+
+:root[data-theme="dark"] .diff-split-empty {
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.02) 5px, rgba(255, 255, 255, 0.02) 10px);
+}
+
+

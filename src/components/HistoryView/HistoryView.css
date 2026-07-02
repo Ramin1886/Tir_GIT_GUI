@@ -1,0 +1,190 @@
+/* History View Layout */
+.history-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.history-view__header {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+}
+
+.history-view__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.history-view__split-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.history-view__list-panel {
+  flex: 1;
+  overflow: auto;
+  background-color: var(--color-bg-secondary);
+  position: relative;
+}
+
+.history-view__detail-panel {
+  width: 400px;
+  min-width: 300px;
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg-primary);
+  overflow-y: auto;
+}
+
+.history-view__no-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-6);
+  text-align: center;
+}
+
+/* Commit Row Styles */
+.commit-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  background-color: var(--color-bg-primary);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.commit-row:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.commit-row--active {
+  background-color: var(--color-bg-tertiary) !important;
+  border-left: 3px solid var(--color-accent);
+}
+
+.commit-row__message {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+}
+
+.commit-row__author {
+  width: 150px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.commit-row__date {
+  width: 150px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.commit-row__id {
+  width: 80px;
+  font-size: var(--font-size-sm);
+  color: var(--color-accent);
+  font-family: monospace;
+  text-align: right;
+  font-weight: 600;
+}
+
+/* Commit Details Panel */
+.commit-details {
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.commit-details__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-4);
+}
+
+.commit-details__title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.commit-details__meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.commit-details__id {
+  font-family: monospace;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.commit-details__files-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.commit-details__files-title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.commit-details__files-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.commit-details__file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-secondary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.commit-details__file-item:hover {
+  background-color: var(--color-bg-tertiary);
+}
+
+.commit-details__file-path {
+  font-family: monospace;
+  word-break: break-all;
+  flex: 1;
+}
+
+

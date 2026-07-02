@@ -1,0 +1,151 @@
+
+
+.style1 {
+  width: 650px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+}
+
+.style2 {
+  font-weight: 600;
+}
+
+.style3 {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.style4 {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.style5 {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.style6 {
+  font-style: italic;
+}
+
+.style7 {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-1);
+}
+
+.style8 {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-4);
+}
+
+.style9 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.style10 {
+  height: 50px;
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--border-radius);
+  opacity: 0.6;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.style11 {
+  padding: var(--spacing-4);
+  background-color: var(--color-toast-error-bg);
+  color: var(--color-toast-error-text);
+  border: 1px solid var(--color-toast-error-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+}
+
+.style12 {
+  text-align: center;
+  padding: var(--spacing-6);
+  color: var(--color-text-secondary);
+}
+
+.style13 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.style14 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+  min-width: 0px;
+}
+
+.style15 {
+  color: var(--color-text-secondary);
+  cursor: grab;
+  font-size: 14px;
+  user-select: none;
+}
+
+.style16 {
+  padding: 3px 6px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: 12px;
+}
+
+.style17 {
+  display: flex;
+  flex-direction: column;
+  min-width: 0px;
+  flex: 1;
+}
+
+.style18 {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.style19 {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.style20 {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.style21 {
+  display: flex;
+  gap: var(--spacing-1);
+  margin-left: var(--spacing-3);
+}
+
+.style22 {
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.style23 {
+  padding: 2px 6px;
+  font-size: 10px;
+}
+
+.style24 {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+}

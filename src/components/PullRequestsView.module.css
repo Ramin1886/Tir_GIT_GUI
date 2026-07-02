@@ -1,0 +1,144 @@
+
+
+.style1 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-4);
+}
+
+.style2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-4);
+  flex-shrink: 0;
+}
+
+.style3 {
+  margin: 0px;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.style4 {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.style5 {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.style6 {
+  padding: var(--spacing-4);
+  color: #cf222e;
+  background-color: var(--color-toast-error-bg);
+  border: 1px solid var(--color-toast-error-border);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-4);
+}
+
+.style7 {
+  padding: var(--spacing-8);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.style8 {
+  padding: var(--spacing-8);
+  text-align: center;
+  color: var(--color-text-secondary);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-secondary);
+}
+
+.style9 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.style10 {
+  padding: var(--spacing-4);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.style11 {
+  display: flex;
+  gap: var(--spacing-3);
+  align-items: flex-start;
+  min-width: 0px;
+}
+
+.style12 {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+}
+
+.style13 {
+  min-width: 0px;
+}
+
+.style14 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+}
+
+.style15 {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+}
+
+.style16 {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.style17 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-top: 4px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.style18 {
+  font-family: var(--font-family-mono);
+  padding: 2px 6px;
+  background-color: var(--color-bg-tertiary);
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.style19 {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+.style20 {
+  text-decoration: none;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.style21 {
+  padding: 6px 12px;
+  font-size: 12px;
+}

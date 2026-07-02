@@ -1,0 +1,133 @@
+
+
+.style1 {
+  width: 500px;
+  height: auto;
+}
+
+.style2 {
+  font-weight: 600;
+}
+
+.style3 {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
+}
+
+.style4 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+}
+
+.style5 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.style6 {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.style7 {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.style8 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.style9 {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.style10 {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.style11 {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-2);
+}
+
+.style12 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+}
+
+.style13 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.style14 {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.style15 {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.style16 {
+  flex: 1;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.style17 {
+  min-width: 80px;
+}
+
+.style18 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.style19 {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-1);
+}
+
+.style20 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-2);
+}
