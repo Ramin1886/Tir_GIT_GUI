@@ -140,6 +140,8 @@ pub fn run() {
             commands::submodules::list_submodules,
             commands::submodules::init_submodules,
             commands::submodules::update_submodules,
+            commands::submodules::sync_submodules,
+            commands::submodules::deinit_submodules,
             // rebase
             commands::rebase::get_rebase_commits,
             commands::rebase::perform_interactive_rebase,

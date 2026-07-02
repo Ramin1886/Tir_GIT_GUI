@@ -65,3 +65,40 @@ pub fn update_submodules(repo_path: &std::path::Path) -> crate::error::Result<()
         Err(String::from_utf8_lossy(&output.stderr).to_string().into())
     }
 }
+
+pub fn sync_submodules(repo_path: &std::path::Path) -> crate::error::Result<()> {
+    let output = std::process::Command::new("git")
+        .arg("submodule")
+        .arg("sync")
+        .arg("--recursive")
+        .current_dir(repo_path)
+        .output()?;
+
+    if output.status.success() {
+        Ok(())
+    } else {
+        Err(String::from_utf8_lossy(&output.stderr).to_string().into())
+    }
+}
+
+pub fn deinit_submodules(
+    repo_path: &std::path::Path,
+    path: Option<String>,
+) -> crate::error::Result<()> {
+    let mut cmd = std::process::Command::new("git");
+    cmd.arg("submodule").arg("deinit");
+
+    if let Some(p) = path {
+        cmd.arg(&p);
+    } else {
+        cmd.arg("--all");
+    }
+
+    let output = cmd.current_dir(repo_path).output()?;
+
+    if output.status.success() {
+        Ok(())
+    } else {
+        Err(String::from_utf8_lossy(&output.stderr).to_string().into())
+    }
+}

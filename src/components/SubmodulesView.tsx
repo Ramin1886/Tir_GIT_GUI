@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { listSubmodules, initSubmodules, updateSubmodules, SubmoduleInfo } from '../api/git';
+import { listSubmodules, initSubmodules, updateSubmodules, syncSubmodules, deinitSubmodules, SubmoduleInfo } from '../api/git';
 import { useAppStore } from '../store';
 
 import styles from "./SubmodulesView.module.css";
@@ -68,6 +68,33 @@ export function SubmodulesView() {
     }
   };
 
+  const handleSync = async () => {
+    setIsActionLoading(true);
+    try {
+      await syncSubmodules();
+      addToast('Submodules synchronized successfully', 'success');
+      await fetchSubmodules();
+    } catch (err) {
+      addToast(`Failed to sync submodules: ${String(err)}`, 'error');
+    } finally {
+      setIsActionLoading(false);
+    }
+  };
+
+  const handleDeinit = async (subPath: string) => {
+    if (!window.confirm(`Are you sure you want to deinit submodule ${subPath}?`)) return;
+    setIsActionLoading(true);
+    try {
+      await deinitSubmodules(subPath);
+      addToast(`Submodule ${subPath} deinitialized`, 'success');
+      await fetchSubmodules();
+    } catch (err) {
+      addToast(`Failed to deinit submodule: ${String(err)}`, 'error');
+    } finally {
+      setIsActionLoading(false);
+    }
+  };
+
   const handleOpenSubmodule = async (subPath: string) => {
     if (!repositoryPath) return;
     
@@ -107,7 +134,13 @@ export function SubmodulesView() {
             className="btn btn--secondary"
             onClick={handleInit}
             disabled={isLoading || isActionLoading}>
-            {isActionLoading ? 'Initializing...' : 'Init Submodules'}
+            Init Submodules
+          </button>
+          <button
+            className="btn btn--secondary"
+            onClick={handleSync}
+            disabled={isLoading || isActionLoading}>
+            Sync Submodules
           </button>
           <button
             className="btn btn--primary"
@@ -174,9 +207,12 @@ export function SubmodulesView() {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div style={{ display: 'flex', gap: 'var(--spacing-2)' }}>
                   <button className="btn btn--primary" onClick={() => handleOpenSubmodule(sm.path)}>
                     Open Submodule Workspace
+                  </button>
+                  <button className="btn btn--danger" onClick={() => handleDeinit(sm.path)} disabled={sm.status !== 'initialized'}>
+                    Deinit
                   </button>
                 </div>
               </div>
