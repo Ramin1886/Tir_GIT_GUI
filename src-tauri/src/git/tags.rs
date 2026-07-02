@@ -92,3 +92,21 @@ pub fn push_tag(
         Err(String::from_utf8_lossy(&output.stderr).to_string().into())
     }
 }
+
+pub fn checkout_tag(repo_path: &std::path::Path, tag_name: String) -> crate::error::Result<()> {
+    let repo = Repository::open(repo_path)?;
+
+    // Find the tag reference or directly the target object
+    let obj = repo.revparse_single(&tag_name)?;
+    let commit = obj.peel_to_commit()?;
+
+    // Checkout the tree
+    let mut opts = git2::build::CheckoutBuilder::new();
+    opts.safe();
+
+    let obj = commit.into_object();
+    repo.checkout_tree(&obj, Some(&mut opts))?;
+    repo.set_head_detached(obj.id())?;
+
+    Ok(())
+}

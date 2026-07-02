@@ -58,3 +58,15 @@ pub fn push_tag(
         ))
     }
 }
+
+#[tauri::command]
+pub fn checkout_tag(name: String, state: State<'_, AppState>) -> crate::error::Result<()> {
+    let repo_path = state.repo_path.lock().unwrap();
+    if let Some(p) = repo_path.as_ref() {
+        git::checkout_tag(p, name)
+    } else {
+        Err(crate::error::GitError::CommandFailed(
+            "No repository is currently open.".to_string(),
+        ))
+    }
+}

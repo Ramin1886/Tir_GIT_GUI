@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { listTags, createTag, deleteTag, pushTag, listRemotes, TagInfo, RemoteInfo } from '../api/git';
+import { listTags, createTag, deleteTag, pushTag, checkoutTag, listRemotes, TagInfo, RemoteInfo } from '../api/git';
 import { useAppStore } from '../store';
 
 import styles from "./TagsView.module.css";
@@ -81,6 +81,15 @@ export function TagsView() {
     }
   };
 
+  const handleCheckout = async (shorthand: string) => {
+    try {
+      await checkoutTag(shorthand);
+      addToast(`Checked out tag ${shorthand} (Detached HEAD)`, 'success');
+    } catch (err) {
+      addToast(`Failed to checkout tag: ${String(err)}`, 'error');
+    }
+  };
+
   const handleOpenPushModal = async (tagShorthand: string) => {
     setSelectedTag(tagShorthand);
     try {
@@ -159,6 +168,11 @@ export function TagsView() {
                   )}
                 </div>
                 <div className="branch-item__actions">
+                  <button
+                    className="btn btn--secondary"
+                    onClick={() => handleCheckout(tag.shorthand)}>
+                    Checkout
+                  </button>
                   <button
                     className="btn btn--primary"
                     onClick={() => handleOpenPushModal(tag.shorthand)}>

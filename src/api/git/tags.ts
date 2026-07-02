@@ -22,3 +22,7 @@ export async function deleteTag(name: string): Promise<void> {
 export async function pushTag(remoteName: string, tagName: string): Promise<string> {
   return await invoke('push_tag', { remoteName, tagName });
 }
+
+export async function checkoutTag(name: string): Promise<void> {
+  await invoke('checkout_tag', { name });
+}

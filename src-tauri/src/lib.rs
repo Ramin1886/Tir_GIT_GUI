@@ -120,6 +120,7 @@ pub fn run() {
             commands::tags::create_tag,
             commands::tags::delete_tag,
             commands::tags::push_tag,
+            commands::tags::checkout_tag,
             // remotes
             commands::remotes::list_remotes,
             commands::remotes::add_remote,
