@@ -171,15 +171,19 @@ export function WorkingTreeFiles({
                   onContextMenu={(e) => {
                     e.preventDefault();
                     setSelectedFile({ path: f.path, staged: false });
+                    const menuItems = [
+                      { label: 'Stage File', action: () => handleStage(f.path) },
+                      { label: 'Discard Changes', danger: true, action: () => handleDiscard(f.path) },
+                      { label: 'View Blame (HEAD)', action: () => setViewingBlamePath(f.path) },
+                      { label: 'File History', action: () => { setHistoryFileFilter(f.path); setCurrentView('HISTORY'); } }
+                    ];
+                    if (isConflicted) {
+                      menuItems.unshift({ label: 'Resolve Conflicts (External Tool)', action: () => handleLaunchMerge(f.path) });
+                    }
                     setContextMenu({
                       x: e.clientX,
                       y: e.clientY,
-                      items: [
-                        { label: 'Stage File', action: () => handleStage(f.path) },
-                        { label: 'Discard Changes', danger: true, action: () => handleDiscard(f.path) },
-                        { label: 'View Blame (HEAD)', action: () => setViewingBlamePath(f.path) },
-                        { label: 'File History', action: () => { setHistoryFileFilter(f.path); setCurrentView('HISTORY'); } }
-                      ]
+                      items: menuItems
                     });
                   }}
                 >
