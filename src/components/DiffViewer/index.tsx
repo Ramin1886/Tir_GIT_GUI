@@ -1,6 +1,6 @@
 import "./DiffViewer.css";
 import { useEffect, useState } from 'react';
-import { getDiff, FileDiff, DiffLine, DiffHunk, applyCustomPatch, getParentCommitId, getFileContentAtCommit } from '../../api/git';
+import { getDiff, FileDiff, DiffLine, DiffHunk, applyCustomPatch, getParentCommitId, getFileContentAtCommit, launchExternalDiff } from '../../api/git';
 import { useAppStore } from '../../store';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { constructCustomPatch } from './diffUtils';
@@ -258,6 +258,32 @@ export function DiffViewer({ path, commitId, staged = false, onRefresh }: DiffVi
               onClick={() => setViewMode('split')}
             >
               Split
+            </button>
+            <button
+              className="btn"
+              style={{
+                padding: 'var(--spacing-1) var(--spacing-3)',
+                fontSize: '11px',
+                borderRadius: 0,
+                backgroundColor: 'var(--color-bg-primary)',
+                color: 'var(--color-text-secondary)',
+                fontWeight: 500,
+                border: 'none',
+                height: '24px',
+                marginLeft: 'var(--spacing-2)'
+              }}
+              title="Open in External Diff Tool"
+              onClick={async () => {
+                try {
+                  await launchExternalDiff(path);
+                } catch (err) {
+                  addToast(`Failed to launch external diff tool: ${String(err)}`, 'error');
+                }
+              }}
+            >
+              <svg viewBox="0 0 24 24" style={{ width: '14px', height: '14px', fill: 'currentColor', verticalAlign: 'middle' }}>
+                <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
+              </svg>
             </button>
           </div>
           <div className="diff-viewer__badges">
