@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { listStashes, saveStash, applyStash, popStash, dropStash, branchFromStash, StashInfo } from '../api/git';
+import { listStashes, saveStash, applyStash, popStash, dropStash, branchFromStash, StashInfo, getCommitDetails, CommitDetails } from '../api/git';
 import { useAppStore } from '../store';
+import { DiffViewer } from './DiffViewer';
 
 import styles from "./StashesView.module.css";
 
@@ -15,6 +16,11 @@ export function StashesView() {
   const [showBranchModal, setShowBranchModal] = useState(false);
   const [selectedStashIndex, setSelectedStashIndex] = useState<number | null>(null);
   const [newBranchName, setNewBranchName] = useState('');
+
+  // Stash diff viewer state
+  const [stashDetails, setStashDetails] = useState<CommitDetails | null>(null);
+  const [selectedDiffPath, setSelectedDiffPath] = useState<string | null>(null);
+  const [detailsLoading, setDetailsLoading] = useState(false);
 
   const { autoRefreshInterval, addToast } = useAppStore();
 
@@ -109,6 +115,25 @@ export function StashesView() {
     }
   };
 
+  const handleSelectStash = async (stash: StashInfo) => {
+    if (selectedStashIndex === stash.index) return;
+    setSelectedStashIndex(stash.index);
+    setDetailsLoading(true);
+    setStashDetails(null);
+    setSelectedDiffPath(null);
+    try {
+      const details = await getCommitDetails(stash.id);
+      setStashDetails(details);
+      if (details.files && details.files.length > 0) {
+        setSelectedDiffPath(details.files[0]);
+      }
+    } catch (err) {
+      addToast(`Failed to load stash details: ${String(err)}`, 'error');
+    } finally {
+      setDetailsLoading(false);
+    }
+  };
+
   return (
     <div className="branches-view"> {/* Reuses layout container rules */}
       <div className="branches-view__header">
@@ -122,49 +147,96 @@ export function StashesView() {
           </button>
         </div>
       </div>
-      <div className="branches-view__content">
-        {error && <p className={styles.style2}>Error: {error}</p>}
+      <div className="history-view__split-container" style={{ borderTop: '1px solid var(--color-border)' }}>
+        <div className="history-view__list-panel" style={{ padding: 'var(--spacing-4)' }}>
+          {error && <p className={styles.style2}>Error: {error}</p>}
 
-        <div className="branch-list">
-          {stashes.length === 0 ? (
-            <p className={styles.style4}>
-              No stashes found in this repository.
-            </p>
-          ) : (
-            stashes.map((stash) => (
-              <div key={`${stash.id}-${stash.index}`} className="branch-item">
-                <div className="branch-item__details">
-                  <span className="branch-item__name">
-                    stash@&#123;{stash.index}&#125;: {stash.message}
-                  </span>
-                  <span className={styles.style8}>
-                    Commit: {stash.id.substring(0, 8)}
-                  </span>
+          <div className="branch-list">
+            {stashes.length === 0 ? (
+              <p className={styles.style4}>
+                No stashes found in this repository.
+              </p>
+            ) : (
+              stashes.map((stash) => (
+                <div 
+                  key={`${stash.id}-${stash.index}`} 
+                  className={`branch-item ${selectedStashIndex === stash.index ? 'branch-item--active' : ''}`}
+                  onClick={() => handleSelectStash(stash)}
+                  style={{ cursor: 'pointer', backgroundColor: selectedStashIndex === stash.index ? 'var(--color-bg-tertiary)' : undefined }}
+                >
+                  <div className="branch-item__details">
+                    <span className="branch-item__name">
+                      stash@&#123;{stash.index}&#125;: {stash.message}
+                    </span>
+                    <span className={styles.style8}>
+                      Commit: {stash.id.substring(0, 8)}
+                    </span>
+                  </div>
+                  <div className="branch-item__actions">
+                    <button
+                      className="btn btn--secondary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedStashIndex(stash.index);
+                        setNewBranchName('');
+                        setShowBranchModal(true);
+                      }}>
+                      Branch
+                    </button>
+                    <button className="btn btn--secondary" onClick={(e) => { e.stopPropagation(); handleApply(stash.index); }}>
+                      Apply
+                    </button>
+                    <button className="btn btn--secondary" onClick={(e) => { e.stopPropagation(); handlePop(stash.index); }}>
+                      Pop
+                    </button>
+                    <button className="btn btn--danger" onClick={(e) => { e.stopPropagation(); handleDrop(stash.index); }}>
+                      Drop
+                    </button>
+                  </div>
                 </div>
-                <div className="branch-item__actions">
-                  <button
-                    className="btn btn--secondary"
-                    onClick={() => {
-                      setSelectedStashIndex(stash.index);
-                      setNewBranchName('');
-                      setShowBranchModal(true);
-                    }}>
-                    Branch
-                  </button>
-                  <button className="btn btn--secondary" onClick={() => handleApply(stash.index)}>
-                    Apply
-                  </button>
-                  <button className="btn btn--secondary" onClick={() => handlePop(stash.index)}>
-                    Pop
-                  </button>
-                  <button className="btn btn--danger" onClick={() => handleDrop(stash.index)}>
-                    Drop
-                  </button>
+              ))
+            )}
+          </div>
+        </div>
+
+        {selectedStashIndex !== null && (
+          <div className="history-view__detail-panel" style={{ padding: 'var(--spacing-4)' }}>
+            {detailsLoading ? (
+              <p>Loading stash details...</p>
+            ) : stashDetails ? (
+              <div style={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 'var(--spacing-4)' }}>
+                <div style={{ borderBottom: '1px solid var(--color-border)', paddingBottom: 'var(--spacing-3)' }}>
+                  <h3 style={{ fontSize: 'var(--font-size-base)', fontWeight: 600, marginBottom: 'var(--spacing-2)' }}>Files in Stash@{selectedStashIndex}</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-1)', maxHeight: '200px', overflowY: 'auto' }}>
+                    {stashDetails.files.map(file => (
+                      <div 
+                        key={file} 
+                        onClick={() => setSelectedDiffPath(file)}
+                        style={{
+                          padding: 'var(--spacing-2) var(--spacing-3)',
+                          cursor: 'pointer',
+                          backgroundColor: selectedDiffPath === file ? 'var(--color-bg-secondary)' : 'transparent',
+                          borderRadius: 'var(--border-radius)',
+                          fontFamily: 'monospace',
+                          fontSize: 'var(--font-size-sm)'
+                        }}
+                      >
+                        {file}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                  {selectedDiffPath ? (
+                    <DiffViewer path={selectedDiffPath} commitId={stashDetails.id} />
+                  ) : (
+                    <p>Select a file to view diff</p>
+                  )}
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ) : null}
+          </div>
+        )}
       </div>
       {showCreateModal && (
         <div className="modal-overlay" onClick={() => setShowCreateModal(false)}>
