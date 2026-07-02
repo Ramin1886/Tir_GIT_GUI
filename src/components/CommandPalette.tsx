@@ -106,6 +106,34 @@ export function CommandPalette({ onClose }: CommandPaletteProps) {
       action: () => setCurrentView('SUBMODULES')
     },
     {
+      id: 'nav-pull-requests',
+      category: 'Navigation',
+      name: 'Go to Pull Requests',
+      shortcut: 'G P',
+      action: () => setCurrentView('PULL_REQUESTS')
+    },
+    {
+      id: 'nav-git-flow',
+      category: 'Navigation',
+      name: 'Go to Git Flow',
+      shortcut: 'G F',
+      action: () => setCurrentView('GIT_FLOW')
+    },
+    {
+      id: 'nav-git-hooks',
+      category: 'Navigation',
+      name: 'Go to Git Hooks',
+      shortcut: 'G K',
+      action: () => setCurrentView('GIT_HOOKS')
+    },
+    {
+      id: 'nav-workspaces',
+      category: 'Navigation',
+      name: 'Go to Workspaces',
+      shortcut: 'G O',
+      action: () => setCurrentView('WORKSPACES')
+    },
+    {
       id: 'nav-settings',
       category: 'Navigation',
       name: 'Go to Settings',
