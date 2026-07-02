@@ -142,6 +142,11 @@ pub fn run() {
             commands::submodules::update_submodules,
             commands::submodules::sync_submodules,
             commands::submodules::deinit_submodules,
+            // lfs
+            commands::lfs::lfs_track_patterns,
+            commands::lfs::lfs_list_tracked_patterns,
+            commands::lfs::lfs_list_locks,
+            commands::lfs::lfs_push,
             // rebase
             commands::rebase::get_rebase_commits,
             commands::rebase::perform_interactive_rebase,
