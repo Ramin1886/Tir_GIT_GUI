@@ -23,21 +23,27 @@ export function PullRequestsView() {
   const [error, setError] = useState<string | null>(null);
   const [repoDetails, setRepoDetails] = useState<{ owner: string; repo: string; host: string } | null>(null);
 
-  const { githubToken, gitlabToken, addToast } = useAppStore();
+  const { githubToken, gitlabToken, gitlabApiUrl, addToast } = useAppStore();
 
   const parseRemoteUrl = (url: string) => {
-    const ghRegex = /(?:git@github\.com:|https:\/\/github\.com\/)([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_.-]+)(?:\.git)?/;
-    const glRegex = /(?:git@gitlab\.com:|https:\/\/gitlab\.com\/)([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_.-]+)(?:\.git)?/;
+    const regex = /(?:git@|https:\/\/)([^:/]+)[:/]([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_.-]+)(?:\.git)?/;
+    const match = url.match(regex);
+    if (!match) return null;
     
-    let match = url.match(ghRegex);
-    if (match) {
-      return { owner: match[1], repo: match[2].replace(/\.git$/, ''), host: 'github' };
+    const host = match[1];
+    const owner = match[2];
+    const repo = match[3].replace(/\.git$/, '');
+    
+    // Determine host type
+    let hostType = 'unknown';
+    if (host.includes('github')) {
+      hostType = 'github';
+    } else if (host.includes('gitlab') || (gitlabApiUrl && gitlabApiUrl.includes(host))) {
+      hostType = 'gitlab';
     }
-    match = url.match(glRegex);
-    if (match) {
-      return { owner: match[1], repo: match[2].replace(/\.git$/, ''), host: 'gitlab' };
-    }
-    return null;
+    
+    if (hostType === 'unknown') return null;
+    return { owner, repo, host: hostType, rawHost: host };
   };
 
   const fetchPRs = useCallback(async () => {
@@ -68,12 +74,17 @@ export function PullRequestsView() {
         if (githubToken) {
           headers['Authorization'] = `token ${githubToken}`;
         }
-        fetchUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/pulls?state=open`;
+        // Support GitHub Enterprise if rawHost is not github.com
+        const baseUrl = parsed.rawHost === 'github.com' ? 'https://api.github.com' : `https://${parsed.rawHost}/api/v3`;
+        fetchUrl = `${baseUrl}/repos/${parsed.owner}/${parsed.repo}/pulls?state=open`;
       } else if (parsed.host === 'gitlab') {
         if (gitlabToken) {
           headers['PRIVATE-TOKEN'] = gitlabToken;
         }
-        fetchUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(parsed.owner + '/' + parsed.repo)}/merge_requests?state=opened`;
+        const baseUrl = gitlabApiUrl || 'https://gitlab.com';
+        // Ensure baseUrl doesn't end with a slash, and typically ends with /api/v4, but user might just provide the base host
+        const apiBase = baseUrl.endsWith('/api/v4') ? baseUrl : `${baseUrl.replace(/\/$/, '')}/api/v4`;
+        fetchUrl = `${apiBase}/projects/${encodeURIComponent(parsed.owner + '/' + parsed.repo)}/merge_requests?state=opened`;
       }
 
       const response = await fetch(fetchUrl, { headers });

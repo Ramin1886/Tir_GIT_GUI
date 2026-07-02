@@ -59,8 +59,10 @@ export interface WorkspaceState {
 export interface IntegrationState {
   githubToken: string | null;
   gitlabToken: string | null;
+  gitlabApiUrl: string | null;
   setGitHubToken: (token: string | null) => Promise<void>;
   setGitLabToken: (token: string | null) => Promise<void>;
+  setGitLabApiUrl: (url: string | null) => Promise<void>;
 }
 
 export interface AppState extends UIState, RepositoryState, WorkspaceState, IntegrationState {

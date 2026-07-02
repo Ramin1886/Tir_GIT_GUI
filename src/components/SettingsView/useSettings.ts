@@ -21,12 +21,14 @@ export function useSettings() {
     setAutoRefreshInterval,
     setGitHubToken,
     setGitLabToken,
+    setGitLabApiUrl,
     addToast,
   } = useAppStore();
 
   const [repoPathInput, setRepoPathInput] = useState(defaultRepoPath);
   const [ghTokenInput, setGhTokenInput] = useState(githubToken || '');
   const [glTokenInput, setGlTokenInput] = useState(gitlabToken || '');
+  const [glApiUrlInput, setGlApiUrlInput] = useState(useAppStore.getState().gitlabApiUrl || 'https://gitlab.com');
   const [toolsConfig, setToolsConfig] = useState<ToolsConfig | null>(null);
   const [newExtension, setNewExtension] = useState('');
   
@@ -49,6 +51,7 @@ export function useSettings() {
     try {
       await setGitHubToken(ghTokenInput.trim() || null);
       await setGitLabToken(glTokenInput.trim() || null);
+      await setGitLabApiUrl(glApiUrlInput.trim() || 'https://gitlab.com');
       addToast('Integrations credentials updated successfully', 'success');
     } catch (err) {
       addToast(`Failed to save integrations credentials: ${String(err)}`, 'error');
@@ -290,6 +293,8 @@ export function useSettings() {
     setGhTokenInput,
     glTokenInput,
     setGlTokenInput,
+    glApiUrlInput,
+    setGlApiUrlInput,
     toolsConfig,
     setToolsConfig,
     newExtension,

@@ -12,6 +12,8 @@ export function SettingsView() {
     setGhTokenInput,
     glTokenInput,
     setGlTokenInput,
+    glApiUrlInput,
+    setGlApiUrlInput,
     toolsConfig,
     newExtension,
     setNewExtension,
@@ -128,6 +130,15 @@ export function SettingsView() {
                 placeholder="ghp_..."
                 value={ghTokenInput}
                 onChange={(e) => setGhTokenInput(e.target.value)}
+                className="settings-input" />
+            </div>
+            <div className={styles.style5}>
+              <label className={styles.style6}>GitLab API URL (for self-managed)</label>
+              <input
+                type="url"
+                placeholder="https://gitlab.com"
+                value={glApiUrlInput}
+                onChange={(e) => setGlApiUrlInput(e.target.value)}
                 className="settings-input" />
             </div>
             <div className={styles.style5}>

@@ -29,6 +29,7 @@ export const useAppStore = create<AppState>((...a) => ({
 
       const githubTokenVal = await getSecret('githubToken');
       const gitlabTokenVal = await getSecret('gitlabToken');
+      const gitlabApiUrlVal = (await settingsStore.get<string>('gitlabApiUrl')) || 'https://gitlab.com';
 
       const workspacesVal =
         (await settingsStore.get<{ name: string; repositories: string[] }[]>('workspaces')) || [];
@@ -44,6 +45,7 @@ export const useAppStore = create<AppState>((...a) => ({
         recentRepositories: recentReposVal,
         githubToken: githubTokenVal,
         gitlabToken: gitlabTokenVal,
+        gitlabApiUrl: gitlabApiUrlVal,
         workspaces: workspacesVal,
       });
     } catch (e) {
