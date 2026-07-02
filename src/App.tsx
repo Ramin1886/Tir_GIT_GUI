@@ -16,6 +16,7 @@ import { openRepository } from './api/git';
 import { GitFlowView } from './components/GitFlowView';
 import { UndoBanner } from './components/UndoBanner';
 import { GitHooksView } from './components/GitHooksView';
+import { LfsView } from './components/LfsView';
 import { PullRequestsView } from './components/PullRequestsView';
 import { WorkspacesView } from './components/WorkspacesView';
 import { EmptyState } from './components/EmptyState';
@@ -32,6 +33,7 @@ const VIEWS: { id: View; label: string }[] = [
   { id: 'SUBMODULES', label: 'Submodules' },
   { id: 'GIT_FLOW', label: 'Git Flow' },
   { id: 'GIT_HOOKS', label: 'Git Hooks' },
+  { id: 'GIT_LFS', label: 'Git LFS' },
   { id: 'PULL_REQUESTS', label: 'Pull Requests' },
   { id: 'WORKSPACES', label: 'Workspaces' },
   { id: 'SETTINGS', label: 'Settings' },
@@ -47,6 +49,7 @@ const VIEW_COMPONENTS: Record<View, ReactNode> = {
   SUBMODULES:    <SubmodulesView />,
   GIT_FLOW:      <GitFlowView />,
   GIT_HOOKS:     <GitHooksView />,
+  GIT_LFS:       <LfsView />,
   PULL_REQUESTS: <PullRequestsView />,
   WORKSPACES:    <WorkspacesView />,
   SETTINGS:      <SettingsView />,

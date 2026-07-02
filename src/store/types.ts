@@ -9,6 +9,7 @@ export type View =
   | 'SUBMODULES'
   | 'GIT_FLOW'
   | 'GIT_HOOKS'
+  | 'GIT_LFS'
   | 'PULL_REQUESTS'
   | 'WORKSPACES';
 
