@@ -1,0 +1,43 @@
+# Maintainer: Tir Contributors <team@tirgit.com>
+
+pkgname=tir-git-gui
+pkgver=0.1.4.beta
+pkgrel=1
+pkgdesc="A beautifully designed, lightning-fast Git GUI built with Tauri and React"
+arch=('x86_64' 'aarch64')
+url="https://github.com/ramin1886/Tir_GIT_GUI"
+license=('MIT')
+depends=('cairo' 'desktop-file-utils' 'gdk-pixbuf2' 'glib2' 'gtk3' 'hicolor-icon-theme' 'libsoup3' 'pango' 'webkit2gtk-4.1' 'openssl' 'libappindicator-gtk3')
+makedepends=('cargo' 'npm' 'git' 'rust')
+source=("git+https://github.com/ramin1886/Tir_GIT_GUI.git#tag=v${pkgver//./-}")
+sha256sums=('SKIP')
+
+prepare() {
+  cd "$srcdir/Tir_GIT_GUI"
+  npm ci
+}
+
+build() {
+  cd "$srcdir/Tir_GIT_GUI"
+  export npm_config_cache="$srcdir/npm_cache"
+  npm run tauri build
+}
+
+package() {
+  cd "$srcdir/Tir_GIT_GUI"
+  
+  install -Dm755 "src-tauri/target/release/tir-git-gui" "$pkgdir/usr/bin/tir-git-gui"
+  
+  # Install icons
+  for res in 32 128 256 512; do
+    if [ -f "src-tauri/icons/${res}x${res}.png" ]; then
+      install -Dm644 "src-tauri/icons/${res}x${res}.png" \
+        "$pkgdir/usr/share/icons/hicolor/${res}x${res}/apps/tir-git-gui.png"
+    fi
+  done
+  
+  # Desktop file
+  if [ -f "src-tauri/icons/tir-git-gui.desktop" ]; then
+    install -Dm644 "src-tauri/icons/tir-git-gui.desktop" "$pkgdir/usr/share/applications/tir-git-gui.desktop"
+  fi
+}
