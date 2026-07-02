@@ -27,6 +27,9 @@ pub fn get_history(
     skip: Option<usize>,
     filter_path: Option<String>,
     filter_content: Option<String>,
+    filter_author: Option<String>,
+    filter_date_from: Option<i64>,
+    filter_date_to: Option<i64>,
 ) -> crate::error::Result<Vec<CommitInfo>> {
     let repo = Repository::open(repo_path)?;
     let mut revwalk = repo.revwalk()?;
@@ -77,6 +80,33 @@ pub fn get_history(
     for id in revwalk {
         let id = id?;
         let commit = repo.find_commit(id)?;
+
+        // Author filtering logic
+        if let Some(ref author) = filter_author {
+            if !author.trim().is_empty() {
+                let author_lower = author.to_lowercase();
+                let commit_author_name = commit.author().name().unwrap_or("").to_lowercase();
+                let commit_author_email = commit.author().email().unwrap_or("").to_lowercase();
+                if !commit_author_name.contains(&author_lower)
+                    && !commit_author_email.contains(&author_lower)
+                {
+                    continue;
+                }
+            }
+        }
+
+        // Date filtering logic
+        let commit_time = commit.time().seconds();
+        if let Some(from) = filter_date_from {
+            if commit_time < from {
+                continue;
+            }
+        }
+        if let Some(to) = filter_date_to {
+            if commit_time > to {
+                continue;
+            }
+        }
 
         // Content filtering logic
         if has_content_filter && !matching_shas.contains(&id.to_string()) {

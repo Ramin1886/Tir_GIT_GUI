@@ -29,6 +29,9 @@ export function useHistory() {
   const [filterPathActive, setFilterPathActive] = useState('');
   const [filterContent, setFilterContent] = useState('');
   const [filterContentActive, setFilterContentActive] = useState('');
+  const [filterAuthorActive, setFilterAuthorActive] = useState('');
+  const [filterDateStartActive, setFilterDateStartActive] = useState('');
+  const [filterDateEndActive, setFilterDateEndActive] = useState('');
 
   const parentRef = useRef<HTMLDivElement>(null);
   const { ciStatuses, fetchCIStatuses } = useCIStatuses();
@@ -42,9 +45,26 @@ export function useHistory() {
     }
   }, [historyFileFilter, setHistoryFileFilter]);
 
-  const fetchHistory = useCallback(async (isBackground = false, activePath = filterPathActive, activeContent = filterContentActive) => {
+  const fetchHistory = useCallback(async (
+    isBackground = false, 
+    activePath = filterPathActive, 
+    activeContent = filterContentActive,
+    activeAuthor = filterAuthorActive,
+    activeDateStart = filterDateStartActive,
+    activeDateEnd = filterDateEndActive
+  ) => {
     try {
-      const result = await getHistory(1000, activePath || undefined, activeContent || undefined);
+      const startSecs = activeDateStart ? new Date(activeDateStart).getTime() / 1000 : undefined;
+      const endSecs = activeDateEnd ? (new Date(activeDateEnd).getTime() + 86400000) / 1000 : undefined;
+      
+      const result = await getHistory(
+        1000, 
+        activePath || undefined, 
+        activeContent || undefined,
+        activeAuthor || undefined,
+        startSecs,
+        endSecs
+      );
       
       setCommits((prev) => {
         if (prev.length === result.length && prev[0]?.id === result[0]?.id && prev[prev.length - 1]?.id === result[result.length - 1]?.id) {
@@ -89,21 +109,21 @@ export function useHistory() {
         addToast(`Failed to load history: ${errMsg}`, 'error');
       }
     }
-  }, [fetchCIStatuses, addToast, filterPathActive, filterContentActive]);
+  }, [fetchCIStatuses, addToast, filterPathActive, filterContentActive, filterAuthorActive, filterDateStartActive, filterDateEndActive]);
 
   useEffect(() => {
-    fetchHistory(false, filterPathActive, filterContentActive);
+    fetchHistory(false, filterPathActive, filterContentActive, filterAuthorActive, filterDateStartActive, filterDateEndActive);
 
     if (autoRefreshInterval <= 0) return;
 
     const intervalId = setInterval(() => {
-      fetchHistory(true, filterPathActive, filterContentActive);
+      fetchHistory(true, filterPathActive, filterContentActive, filterAuthorActive, filterDateStartActive, filterDateEndActive);
     }, autoRefreshInterval);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [autoRefreshInterval, filterPathActive, filterContentActive, fetchHistory]);
+  }, [autoRefreshInterval, filterPathActive, filterContentActive, filterAuthorActive, filterDateStartActive, filterDateEndActive, fetchHistory]);
 
   useEffect(() => {
     setDagMap(computeDag(commits));
@@ -141,21 +161,10 @@ export function useHistory() {
     };
   }, [selectedCommitId, addToast]);
 
-  // Client-side filtering of keyword, author, and date
+  // Client-side filtering of keyword only, since author and date are now backend
   const filteredCommits = commits.filter((commit) => {
     if (filterKeyword && !commit.message.toLowerCase().includes(filterKeyword.toLowerCase())) {
       return false;
-    }
-    if (filterAuthor && !commit.author.toLowerCase().includes(filterAuthor.toLowerCase())) {
-      return false;
-    }
-    if (filterDateStart) {
-      const startSecs = new Date(filterDateStart).getTime() / 1000;
-      if (commit.time < startSecs) return false;
-    }
-    if (filterDateEnd) {
-      const endSecs = (new Date(filterDateEnd).getTime() + 86400000) / 1000;
-      if (commit.time > endSecs) return false;
     }
     return true;
   });
@@ -173,6 +182,15 @@ export function useHistory() {
 
   const handleContentFilterSubmit = () => {
     setFilterContentActive(filterContent);
+  };
+
+  const handleAuthorFilterSubmit = () => {
+    setFilterAuthorActive(filterAuthor);
+  };
+
+  const handleDateFilterSubmit = () => {
+    setFilterDateStartActive(filterDateStart);
+    setFilterDateEndActive(filterDateEnd);
   };
 
   const handleCopyHash = () => {
@@ -261,6 +279,8 @@ export function useHistory() {
     rowVirtualizer,
     handlePathFilterSubmit,
     handleContentFilterSubmit,
+    handleAuthorFilterSubmit,
+    handleDateFilterSubmit,
     handleCopyHash,
     handleCherryPick,
     handleRevert,

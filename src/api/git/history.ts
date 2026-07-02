@@ -22,6 +22,9 @@ export async function getHistory(
   limit: number,
   filterPath?: string,
   filterContent?: string,
+  filterAuthor?: string,
+  filterDateFrom?: number,
+  filterDateTo?: number,
   skip?: number
 ): Promise<CommitInfo[]> {
   return await invoke('get_history', {
@@ -29,6 +32,9 @@ export async function getHistory(
     skip,
     filterPath,
     filterContent,
+    filterAuthor,
+    filterDateFrom,
+    filterDateTo,
   });
 }
 

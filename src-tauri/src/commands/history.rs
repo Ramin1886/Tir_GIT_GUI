@@ -13,10 +13,22 @@ pub fn get_history(
     skip: Option<usize>,
     filter_path: Option<String>,
     filter_content: Option<String>,
+    filter_author: Option<String>,
+    filter_date_from: Option<i64>,
+    filter_date_to: Option<i64>,
 ) -> crate::error::Result<Vec<git::CommitInfo>> {
     let repo_path = state.repo_path.lock().unwrap();
     if let Some(path) = repo_path.as_deref() {
-        git::get_history(path, limit, skip, filter_path, filter_content)
+        git::get_history(
+            path,
+            limit,
+            skip,
+            filter_path,
+            filter_content,
+            filter_author,
+            filter_date_from,
+            filter_date_to,
+        )
     } else {
         Err(crate::error::GitError::CommandFailed(
             "No repository is currently open.".to_string(),

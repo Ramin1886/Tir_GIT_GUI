@@ -15,6 +15,8 @@ interface HistoryFiltersProps {
   filterContent: string;
   setFilterContent: (s: string) => void;
   handleContentFilterSubmit: () => void;
+  handleAuthorFilterSubmit: () => void;
+  handleDateFilterSubmit: () => void;
 }
 
 export function HistoryFilters({
@@ -23,7 +25,8 @@ export function HistoryFilters({
   filterDateStart, setFilterDateStart,
   filterDateEnd, setFilterDateEnd,
   filterPath, setFilterPath, handlePathFilterSubmit,
-  filterContent, setFilterContent, handleContentFilterSubmit
+  filterContent, setFilterContent, handleContentFilterSubmit,
+  handleAuthorFilterSubmit, handleDateFilterSubmit
 }: HistoryFiltersProps) {
   return (
     <div className="history-view__filters">
@@ -34,27 +37,40 @@ export function HistoryFilters({
         onChange={(e) => setFilterKeyword(e.target.value)}
         className={styles.style2}
       />
-      <input
-        type="text"
-        placeholder="Author..."
-        value={filterAuthor}
-        onChange={(e) => setFilterAuthor(e.target.value)}
-        className={styles.style3}
-      />
-      <input
-        type="date"
-        title="Start date"
-        value={filterDateStart}
-        onChange={(e) => setFilterDateStart(e.target.value)}
-        className={styles.style4}
-      />
-      <input
-        type="date"
-        title="End date"
-        value={filterDateEnd}
-        onChange={(e) => setFilterDateEnd(e.target.value)}
-        className={styles.style5}
-      />
+      <div className={styles.style6}>
+        <input
+          type="text"
+          placeholder="Author..."
+          value={filterAuthor}
+          onChange={(e) => setFilterAuthor(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleAuthorFilterSubmit(); }}
+          className={styles.style3}
+        />
+        <button className="btn btn--primary" onClick={handleAuthorFilterSubmit}>
+          Author
+        </button>
+      </div>
+      <div className={styles.style6}>
+        <input
+          type="date"
+          title="Start date"
+          value={filterDateStart}
+          onChange={(e) => setFilterDateStart(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleDateFilterSubmit(); }}
+          className={styles.style4}
+        />
+        <input
+          type="date"
+          title="End date"
+          value={filterDateEnd}
+          onChange={(e) => setFilterDateEnd(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleDateFilterSubmit(); }}
+          className={styles.style5}
+        />
+        <button className="btn btn--primary" onClick={handleDateFilterSubmit}>
+          Date
+        </button>
+      </div>
       <div className={styles.style6}>
         <input
           type="text"

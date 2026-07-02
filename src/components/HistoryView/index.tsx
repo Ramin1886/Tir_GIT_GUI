@@ -50,6 +50,8 @@ export function HistoryView() {
     rowVirtualizer,
     handlePathFilterSubmit,
     handleContentFilterSubmit,
+    handleAuthorFilterSubmit,
+    handleDateFilterSubmit,
     handleCopyHash,
     handleCherryPick,
     handleRevert,
@@ -107,6 +109,8 @@ export function HistoryView() {
             filterContent={filterContent}
             setFilterContent={setFilterContent}
             handleContentFilterSubmit={handleContentFilterSubmit}
+            handleAuthorFilterSubmit={handleAuthorFilterSubmit}
+            handleDateFilterSubmit={handleDateFilterSubmit}
           />
           <CommitList
             filteredCommits={filteredCommits}
